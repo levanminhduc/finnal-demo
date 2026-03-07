@@ -1,0 +1,20 @@
+# Claude Code config
+.claude/
+.claude-archived/
+.agents/
+
+# Playwright MCP
+.playwright-mcp/
+
+# Documentation & Plans (local only)
+docs/
+plans/
+
+# Screenshots / Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.svg
+*.webp
