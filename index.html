@@ -1,41 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hệ thống Quản lý Nhân sự — HR Portal</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="js/ui-config.js"></script>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
-
-  <div class="bg-white rounded-3xl shadow-soft-lg p-10 w-full max-w-md text-center border border-slate-100 fade-in">
-    <div class="mb-8">
-      <div class="inline-flex items-center justify-center w-20 h-20 bg-slate-900 rounded-2xl mb-6 shadow-lg shadow-slate-200 rotate-3 hover:rotate-0 transition-transform duration-300">
-        <span class="text-white text-3xl font-bold tracking-tighter">HR</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hệ thống Quản lý Nhân sự — HR Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/ui-config.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+    <div
+      class="bg-white rounded-3xl shadow-soft-lg p-10 w-full max-w-md text-center border border-slate-100 fade-in"
+    >
+      <div class="mb-8">
+        <div
+          class="inline-flex items-center justify-center w-20 h-20 bg-slate-900 rounded-2xl mb-6 shadow-lg shadow-slate-200 rotate-3 hover:rotate-0 transition-transform duration-300"
+        >
+          <span class="text-white text-3xl font-bold tracking-tighter">HR</span>
+        </div>
+        <h1 class="text-3xl font-black text-slate-900 tracking-tight">
+          HR Management
+        </h1>
+        <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+          Giải pháp quản trị nhân sự hiện đại, <br />tối ưu và thân thiện.
+        </p>
       </div>
-      <h1 class="text-3xl font-black text-slate-900 tracking-tight">HR Management</h1>
-      <p class="text-slate-500 text-sm mt-3 leading-relaxed">Giải pháp quản trị nhân sự hiện đại, <br>tối ưu và thân thiện.</p>
+
+      <div class="flex flex-col gap-4">
+        <a
+          href="login.html"
+          class="block rounded-xl bg-slate-900 text-white text-sm font-bold px-6 py-4 hover:bg-slate-800 shadow-md shadow-slate-200 transition-all active:scale-95"
+        >
+          Đăng nhập hệ thống
+        </a>
+        <a
+          href="register.html"
+          class="block rounded-xl border-2 border-slate-100 text-slate-700 text-sm font-bold px-6 py-4 hover:bg-slate-50 hover:border-slate-200 transition-all active:scale-95"
+        >
+          Đăng ký tài khoản
+        </a>
+      </div>
     </div>
 
-    <div class="flex flex-col gap-4">
-      <a href="login.html"
-        class="block rounded-xl bg-slate-900 text-white text-sm font-bold px-6 py-4 hover:bg-slate-800 shadow-md shadow-slate-200 transition-all active:scale-95">
-        Đăng nhập hệ thống
-      </a>
-      <a href="register.html"
-        class="block rounded-xl border-2 border-slate-100 text-slate-700 text-sm font-bold px-6 py-4 hover:bg-slate-50 hover:border-slate-200 transition-all active:scale-95">
-        Đăng ký tài khoản
-      </a>
-    </div>
-
-    <div class="mt-10 pt-8 border-t border-slate-50">
-      <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none mb-1">Cung cấp bởi</p>
-      <p class="text-xs text-slate-500 font-semibold">ABC HR Tech Solution — 2026</p>
-    </div>
-  </div>
-
-  <script src="js/data.js"></script>
-</body>
+    <script src="js/data.js"></script>
+  </body>
 </html>
