@@ -9,6 +9,7 @@
 # Documentation & Plans (local only)
 docs/
 plans/
+node_modules/
 
 # Screenshots / Images
 *.png

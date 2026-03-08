@@ -64,41 +64,53 @@ function renderSidebar(menuItems, containerId) {
   const container = document.getElementById(containerId || 'sidebar');
   if (!container) return;
 
+  // Persistence for desktop collapse state
+  const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+  const sidebarWidthClass = isCollapsed ? 'md:w-20' : 'md:w-64';
+
   // Modern Sidebar Wrapper
-  container.className = "fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-300 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col md:shadow-none shrink-0 overflow-hidden";
+  container.className = `fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-300 shadow-2xl transform -translate-x-full transition-all duration-300 ease-in-out md:sticky md:top-16 md:h-[calc(100vh-4rem)] md:translate-x-0 md:flex md:flex-col md:shadow-none shrink-0 overflow-hidden ${sidebarWidthClass}`;
   
   const logoSection = `
-    <div class="p-6 flex items-center gap-3 border-b border-slate-800">
-      <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-primary-500/20">H</div>
-      <span class="font-bold text-white tracking-tight text-lg">HR Portal</span>
+    <div class="flex items-center border-b border-slate-800 transition-all duration-300 ${isCollapsed ? 'flex-col py-4 gap-4' : 'p-6 justify-between'}">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-primary-500/20 shrink-0">H</div>
+        <span class="font-bold text-white tracking-tight text-lg transition-all duration-300 ${isCollapsed ? 'md:hidden' : 'opacity-100'}">HR Portal</span>
+      </div>
+      <button onclick="toggleDesktopSidebar()" class="hidden md:flex p-1.5 rounded-lg hover:bg-slate-800 text-slate-500 hover:text-white transition-colors">
+        <svg class="w-5 h-5 transform transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+        </svg>
+      </button>
     </div>
   `;
 
   const ul = document.createElement('ul');
-  ul.className = 'flex-1 overflow-y-auto py-6 px-4 space-y-1.5 custom-scrollbar';
+  ul.className = `flex-1 overflow-y-auto py-6 space-y-1.5 custom-scrollbar transition-all duration-300 ${isCollapsed ? 'px-2' : 'px-4'}`;
 
   menuItems.forEach(item => {
     const isActive = item.href === currentPage;
     const li = document.createElement('li');
     li.innerHTML = `
-      <a href="${item.href}"
-        class="group flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200
+      <a href="${item.href}" title="${isCollapsed ? item.label : ''}"
+        class="group flex items-center gap-3 rounded-xl transition-all duration-200
+               ${isCollapsed ? 'justify-center px-0 py-3' : 'px-4 py-2.5'}
                ${isActive
                  ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/20'
                  : 'hover:bg-slate-800 hover:text-white'}"
       >
-        <span class="${isActive ? 'text-white' : 'text-slate-500 group-hover:text-primary-400'} transition-colors">${item.icon}</span>
-        <span class="font-medium text-sm">${item.label}</span>
-        ${isActive ? '<span class="ml-auto w-1.5 h-1.5 rounded-full bg-white"></span>' : ''}
+        <span class="${isActive ? 'text-white' : 'text-slate-500 group-hover:text-primary-400'} transition-colors shrink-0">${item.icon}</span>
+        <span class="font-medium text-sm whitespace-nowrap transition-all duration-300 ${isCollapsed ? 'md:hidden' : 'opacity-100'}">${item.label}</span>
+        ${(isActive && !isCollapsed) ? '<span class="ml-auto w-1.5 h-1.5 rounded-full bg-white transition-opacity duration-300"></span>' : ''}
       </a>`;
     ul.appendChild(li);
   });
 
   const footerSection = `
-    <div class="p-4 mt-auto border-t border-slate-800">
-      <div class="bg-slate-800/50 rounded-xl p-4">
-        <p class="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-1">Phiên bản</p>
-        <p class="text-xs text-slate-300 font-medium">v2.4.0 — 2026</p>
+    <div class="p-4 mt-auto border-t border-slate-800 transition-all duration-300 ${isCollapsed ? 'md:p-2' : 'p-4'}">
+      <div class="bg-slate-800/50 rounded-xl p-4 flex flex-col items-center overflow-hidden">
+        <p class="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-1 transition-all duration-300 ${isCollapsed ? 'md:opacity-0 md:h-0' : 'opacity-100'} text-center">Phiên bản</p>
+        <p class="text-xs text-slate-300 font-medium whitespace-nowrap">${isCollapsed ? 'v2.4' : 'v2.4.0 — 2026'}</p>
       </div>
     </div>
   `;
@@ -106,6 +118,19 @@ function renderSidebar(menuItems, containerId) {
   container.innerHTML = logoSection;
   container.appendChild(ul);
   container.insertAdjacentHTML('beforeend', footerSection);
+}
+
+function toggleDesktopSidebar() {
+  const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+  localStorage.setItem('sidebarCollapsed', !isCollapsed);
+  
+  // Re-render based on current role
+  const user = getCurrentUser();
+  if (user && user.role === 'admin') {
+    renderAdminSidebar();
+  } else {
+    renderEmployeeSidebar();
+  }
 }
 
 function renderAdminSidebar() {
