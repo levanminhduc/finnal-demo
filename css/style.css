@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --sidebar-width: 260px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Glassmorphism effects */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Table Enhancements */
+.table-container {
+  @apply overflow-hidden rounded-xl border border-slate-200 bg-white shadow-soft;
+}
+
+table thead th {
+  @apply bg-slate-50/50 py-4 font-semibold text-slate-600 uppercase tracking-wider;
+}
+
+table tbody tr {
+  @apply transition-colors duration-150;
+}
+
+table tbody td {
+  @apply py-4;
+}
+
+/* Form Enhancements */
+input, select, textarea {
+  @apply transition-all duration-200 border-slate-200 shadow-sm focus:border-primary-500 focus:ring-primary-500/20 !important;
+}
+
+button {
+  @apply transition-all duration-200 active:scale-95 !important;
+}
+
+/* Card Enhancements */
+.card {
+  @apply bg-white p-6 rounded-xl border border-slate-200/60 shadow-soft hover:shadow-soft-lg transition-all duration-300;
+}
+
+/* Sidebar Custom Scrollbar for dark theme */
+#sidebar::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+#sidebar::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

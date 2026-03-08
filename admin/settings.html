@@ -3,41 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cài đặt - Admin</title>
+  <title>Cài đặt hệ thống — Quản trị viên</title>
+  <script src="../js/ui-config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="bg-slate-100 min-h-screen">
-  <header id="header" class="bg-white shadow px-4 md:px-6 py-3 flex justify-between items-center sticky top-0 z-30"></header>
-  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden" onclick="toggleSidebar()"></div>
-  <div class="flex gap-0 md:gap-6 p-4 md:p-6">
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-56 bg-white shadow-lg p-4 pt-20 transform -translate-x-full transition-transform md:relative md:translate-x-0 md:shadow-none md:p-0 md:bg-transparent md:z-0 md:sticky md:top-6 md:self-start shrink-0 overflow-y-auto md:max-h-[calc(100vh-5rem)]"></aside>
-    <main class="flex-1 min-w-0">
-      <h2 class="text-xl font-bold text-slate-800 mb-4">Cài đặt hệ thống</h2>
-      <div class="bg-white rounded-md shadow p-6 max-w-lg">
-        <div class="space-y-4">
+<body class="bg-slate-50 min-h-screen">
+  <header id="header"></header>
+  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden" onclick="toggleSidebar()"></div>
+  
+  <div class="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
+    <aside id="sidebar"></aside>
+    
+    <main class="flex-1 p-6 md:p-8 lg:p-10 fade-in">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 class="text-3xl font-black text-slate-900 tracking-tight">Cài đặt</h2>
+          <p class="text-slate-500 text-sm mt-1">Cấu hình các tham số hoạt động chung của hệ thống.</p>
+        </div>
+      </div>
+
+      <div class="card bg-white p-8 border-none shadow-soft-lg max-w-2xl">
+        <h3 class="text-lg font-black text-slate-900 tracking-tight mb-8 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-primary-600 rounded-full"></span>
+          Cấu hình chung
+        </h3>
+        
+        <div class="space-y-8">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Tên công ty</label>
-            <input id="companyName" type="text"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Tên tổ chức / Công ty</label>
+            <input id="companyName" type="text" placeholder="VD: HR Management System" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
           </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Số ngày công chuẩn/tháng</label>
-            <input id="standardWorkDays" type="number" min="1" max="31"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Ngày công tiêu chuẩn/tháng</label>
+              <input id="standardWorkDays" type="number" min="1" max="31" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Phụ cấp cơ bản (VNĐ)</label>
+              <input id="defaultAllowance" type="number" min="0" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
+            </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Phụ cấp mặc định (VNĐ)</label>
-            <input id="defaultAllowance" type="number" min="0"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+          
+          <div class="pt-4">
+            <button onclick="saveSettings()" class="rounded-2xl bg-primary-600 text-white text-sm font-black px-10 py-4 hover:bg-primary-700 shadow-xl shadow-primary-600/20 transition-all active:scale-95">
+              Lưu cấu hình
+            </button>
           </div>
-          <button onclick="saveSettings()"
-            class="rounded-md bg-slate-800 text-white text-sm px-4 py-2 hover:bg-slate-700">
-            Lưu cài đặt
-          </button>
         </div>
       </div>
     </main>
   </div>
+
   <script src="../js/data.js"></script>
   <script src="../js/shared.js"></script>
   <script src="../js/auth.js"></script>

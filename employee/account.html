@@ -3,42 +3,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tài khoản - Nhân viên</title>
+  <title>Bảo mật & Tài khoản — Nhân viên</title>
+  <script src="../js/ui-config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="bg-slate-100 min-h-screen">
-  <header id="header" class="bg-white shadow px-4 md:px-6 py-3 flex justify-between items-center sticky top-0 z-30"></header>
-  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden" onclick="toggleSidebar()"></div>
-  <div class="flex gap-0 md:gap-6 p-4 md:p-6">
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-56 bg-white shadow-lg p-4 pt-20 transform -translate-x-full transition-transform md:relative md:translate-x-0 md:shadow-none md:p-0 md:bg-transparent md:z-0 md:sticky md:top-6 md:self-start shrink-0 overflow-y-auto md:max-h-[calc(100vh-5rem)]"></aside>
-    <main class="flex-1 min-w-0">
-      <h2 class="text-xl font-bold text-slate-800 mb-4">Tài khoản</h2>
-      <div class="bg-white rounded-md shadow p-6 max-w-lg">
-        <h3 class="text-base font-semibold text-slate-700 mb-4">Đổi mật khẩu</h3>
-        <div class="space-y-4">
+<body class="bg-slate-50 min-h-screen">
+  <header id="header"></header>
+  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden" onclick="toggleSidebar()"></div>
+  
+  <div class="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
+    <aside id="sidebar"></aside>
+    
+    <main class="flex-1 p-6 md:p-8 lg:p-10 fade-in">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 class="text-3xl font-black text-slate-900 tracking-tight">Tài khoản</h2>
+          <p class="text-slate-500 text-sm mt-1">Quản lý thông tin đăng nhập và bảo mật tài khoản cá nhân.</p>
+        </div>
+      </div>
+
+      <div class="card bg-white p-8 border-none shadow-soft-lg max-w-2xl">
+        <h3 class="text-lg font-black text-slate-900 tracking-tight mb-8 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-primary-600 rounded-full"></span>
+          Đổi mật khẩu truy cập
+        </h3>
+        
+        <div class="space-y-6">
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Mật khẩu hiện tại</label>
-            <input id="oldPassword" type="password"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Mật khẩu hiện tại</label>
+            <input id="oldPassword" type="password" placeholder="••••••••" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Mật khẩu mới</label>
-            <input id="newPassword" type="password"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Mật khẩu mới</label>
+            <input id="newPassword" type="password" placeholder="••••••••" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
           </div>
           <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Xác nhận mật khẩu mới</label>
-            <input id="confirmNewPassword" type="password"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Xác nhận mật khẩu mới</label>
+            <input id="confirmNewPassword" type="password" placeholder="••••••••" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
           </div>
-          <button onclick="changePassword()"
-            class="rounded-md bg-slate-800 text-white text-sm px-4 py-2 hover:bg-slate-700">
-            Đổi mật khẩu
-          </button>
+          
+          <div class="pt-4">
+            <button onclick="changePassword()" class="w-full sm:w-auto rounded-2xl bg-slate-900 text-white text-sm font-black px-10 py-4 hover:bg-slate-800 transition-all active:scale-95 shadow-xl shadow-slate-900/10">
+              Cập nhật mật khẩu
+            </button>
+          </div>
         </div>
       </div>
     </main>
   </div>
+
   <script src="../js/data.js"></script>
   <script src="../js/shared.js"></script>
   <script src="../js/auth.js"></script>

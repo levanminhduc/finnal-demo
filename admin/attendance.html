@@ -3,37 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý Chấm công - Admin</title>
+  <title>Quản lý Chấm công — Quản trị viên</title>
+  <script src="../js/ui-config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="bg-slate-100 min-h-screen">
-  <header id="header" class="bg-white shadow px-4 md:px-6 py-3 flex justify-between items-center sticky top-0 z-30"></header>
-  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden" onclick="toggleSidebar()"></div>
-  <div class="flex gap-0 md:gap-6 p-4 md:p-6">
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-56 bg-white shadow-lg p-4 pt-20 transform -translate-x-full transition-transform md:relative md:translate-x-0 md:shadow-none md:p-0 md:bg-transparent md:z-0 md:sticky md:top-6 md:self-start shrink-0 overflow-y-auto md:max-h-[calc(100vh-5rem)]"></aside>
-    <main class="flex-1 min-w-0">
-      <h2 class="text-xl font-bold text-slate-800 mb-4">Quản lý Chấm công</h2>
-      <div class="flex gap-3 mb-4">
+<body class="bg-slate-50 min-h-screen">
+  <header id="header"></header>
+  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden" onclick="toggleSidebar()"></div>
+  
+  <div class="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
+    <aside id="sidebar"></aside>
+    
+    <main class="flex-1 p-6 md:p-8 lg:p-10 fade-in">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <label class="block text-xs font-medium text-slate-600 mb-1">Tháng</label>
-          <select id="filterMonth"
-            class="rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400"
-            onchange="renderAttendanceList()">
-            <option value="">Tất cả</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-600 mb-1">Nhân viên</label>
-          <select id="filterEmployee"
-            class="rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400"
-            onchange="renderAttendanceList()">
-            <option value="">Tất cả</option>
-          </select>
+          <h2 class="text-3xl font-black text-slate-900 tracking-tight">Chấm công</h2>
+          <p class="text-slate-500 text-sm mt-1">Theo dõi và quản lý dữ liệu chấm công của toàn bộ nhân viên.</p>
         </div>
       </div>
-      <div id="attendanceTable"></div>
+
+      <div class="card bg-white p-6 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Lọc theo Tháng</label>
+            <select id="filterMonth"
+              class="w-full rounded-2xl border-2 border-slate-100 px-4 py-2.5 text-sm font-medium focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 transition-all outline-none"
+              onchange="renderAttendanceList()">
+              <option value="">Tất cả</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Lọc theo Nhân viên</label>
+            <select id="filterEmployee"
+              class="w-full rounded-2xl border-2 border-slate-100 px-4 py-2.5 text-sm font-medium focus:border-primary-500 focus:ring-4 focus:ring-primary-500/5 transition-all outline-none"
+              onchange="renderAttendanceList()">
+              <option value="">Tất cả</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-white p-0 overflow-hidden border-none shadow-soft-lg">
+        <div id="attendanceTable"></div>
+      </div>
     </main>
   </div>
+
   <script src="../js/data.js"></script>
   <script src="../js/shared.js"></script>
   <script src="../js/auth.js"></script>

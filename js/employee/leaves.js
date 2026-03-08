@@ -7,7 +7,7 @@ function renderMyLeaves() {
   const container = document.getElementById('leaveTable');
 
   if (!emp) {
-    container.innerHTML = '<p class="text-sm text-slate-500 py-4">Không tìm thấy thông tin nhân viên.</p>';
+    container.innerHTML = '<div class="text-center py-12 bg-white rounded-3xl border border-dashed border-slate-200"><p class="text-sm text-slate-400 font-medium">Không tìm thấy thông tin nhân viên.</p></div>';
     return;
   }
 
@@ -16,45 +16,46 @@ function renderMyLeaves() {
     .sort((a, b) => b.id - a.id);
 
   if (leaves.length === 0) {
-    container.innerHTML = '<p class="text-sm text-slate-500 py-4">Chưa có đơn nghỉ phép nào.</p>';
+    container.innerHTML = '<div class="text-center py-12 bg-white rounded-3xl border border-dashed border-slate-200"><p class="text-sm text-slate-400 font-medium">Chưa có đơn nghỉ phép nào.</p></div>';
     return;
   }
 
   const rows = leaves.map(l => {
-    // Support both fromDate/toDate (new) and from/to (seed data)
     const fromDate = l.fromDate || l.from || '—';
     const toDate = l.toDate || l.to || '—';
 
     let statusBadge;
     if (l.status === 'Approved') {
-      statusBadge = '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">Approved</span>';
+      statusBadge = '<span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Approved</span>';
     } else if (l.status === 'Rejected') {
-      statusBadge = '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">Rejected</span>';
+      statusBadge = '<span class="bg-rose-50 text-rose-700 border border-rose-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Rejected</span>';
     } else {
-      statusBadge = '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-700">Pending</span>';
+      statusBadge = '<span class="bg-amber-50 text-amber-700 border border-amber-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Pending</span>';
     }
 
     return `
-      <tr class="hover:bg-slate-50">
-        <td class="px-4 py-3 text-sm">${formatDate(fromDate)}</td>
-        <td class="px-4 py-3 text-sm">${formatDate(toDate)}</td>
-        <td class="px-4 py-3 text-sm">${l.reason || '—'}</td>
-        <td class="px-4 py-3 text-sm">${statusBadge}</td>
+      <tr class="group hover:bg-slate-50/80 transition-colors">
+        <td class="px-6 py-4 text-sm font-bold text-slate-700">${formatDate(fromDate)}</td>
+        <td class="px-6 py-4 text-sm font-bold text-slate-700">${formatDate(toDate)}</td>
+        <td class="px-6 py-4 text-sm text-slate-600 font-medium">${l.reason || '—'}</td>
+        <td class="px-6 py-4 text-sm">${statusBadge}</td>
       </tr>`;
   }).join('');
 
   container.innerHTML = `
-    <div class="overflow-x-auto"><table class="w-full bg-white rounded-md shadow overflow-hidden">
-      <thead class="bg-slate-100">
-        <tr>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Từ ngày</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Đến ngày</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Lý do</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Trạng thái</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-100">${rows}</tbody>
-    </table></div>`;
+    <div class="overflow-x-auto rounded-3xl border border-slate-100 shadow-sm bg-white">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-slate-50/50 border-b border-slate-100">
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Từ ngày</th>
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Đến ngày</th>
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Lý do</th>
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 function submitLeave(event) {

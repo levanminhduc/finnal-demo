@@ -3,68 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hồ sơ cá nhân - Nhân viên</title>
+  <title>Hồ sơ cá nhân — Nhân viên</title>
+  <script src="../js/ui-config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="bg-slate-100 min-h-screen">
-  <header id="header" class="bg-white shadow px-4 md:px-6 py-3 flex justify-between items-center sticky top-0 z-30"></header>
-  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden" onclick="toggleSidebar()"></div>
-  <div class="flex gap-0 md:gap-6 p-4 md:p-6">
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-56 bg-white shadow-lg p-4 pt-20 transform -translate-x-full transition-transform md:relative md:translate-x-0 md:shadow-none md:p-0 md:bg-transparent md:z-0 md:sticky md:top-6 md:self-start shrink-0 overflow-y-auto md:max-h-[calc(100vh-5rem)]"></aside>
-    <main class="flex-1 min-w-0">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-xl font-bold text-slate-800">Hồ sơ cá nhân</h2>
-        <button onclick="toggleEdit()" id="editBtn"
-          class="rounded-md bg-slate-800 text-white text-sm px-4 py-2 hover:bg-slate-700">
-          Chỉnh sửa
+<body class="bg-slate-50 min-h-screen">
+  <header id="header"></header>
+  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden" onclick="toggleSidebar()"></div>
+  
+  <div class="flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
+    <aside id="sidebar"></aside>
+    
+    <main class="flex-1 p-6 md:p-8 lg:p-10 fade-in">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h2 class="text-3xl font-black text-slate-900 tracking-tight">Hồ sơ cá nhân</h2>
+          <p class="text-slate-500 text-sm mt-1">Thông tin chi tiết về hồ sơ nhân sự của bạn trên hệ thống.</p>
+        </div>
+        <button onclick="toggleEdit()" id="editBtn" class="inline-flex items-center gap-2 rounded-2xl bg-primary-600 text-white text-sm font-black px-8 py-3.5 hover:bg-primary-700 shadow-xl shadow-primary-600/20 transition-all active:scale-95 self-start sm:self-auto">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+          Chỉnh sửa thông tin
         </button>
       </div>
 
       <!-- Profile display card -->
-      <div id="profileCard" class="bg-white rounded-md shadow p-6 mb-4"></div>
+      <div id="profileCard" class="fade-in mb-8"></div>
 
-      <!-- Edit form (hidden by default) -->
-      <div id="editForm" class="hidden bg-white rounded-md shadow p-6">
-        <h3 class="font-semibold text-slate-700 mb-4">Chỉnh sửa thông tin</h3>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="col-span-2">
-            <label class="block text-xs font-medium text-slate-600 mb-1">Họ tên <span class="text-red-500">*</span></label>
-            <input id="editName" type="text"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400" />
+      <!-- Edit form -->
+      <div id="editForm" class="hidden card bg-white p-8 border-none shadow-soft-lg max-w-3xl">
+        <h3 class="text-xl font-black text-slate-900 tracking-tight mb-8 flex items-center gap-2">
+          <span class="w-1.5 h-6 bg-primary-600 rounded-full"></span>
+          Cập nhật thông tin hồ sơ
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="md:col-span-2">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Họ tên nhân viên <span class="text-rose-500">*</span></label>
+            <input id="editName" type="text" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
           </div>
+          
           <div>
-            <label class="block text-xs font-medium text-slate-600 mb-1">Giới tính</label>
-            <select id="editGender"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Giới tính</label>
+            <select id="editGender" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none">
               <option value="Nam">Nam</option>
               <option value="Nữ">Nữ</option>
             </select>
           </div>
+          
           <div>
-            <label class="block text-xs font-medium text-slate-600 mb-1">Ngày sinh</label>
-            <input id="editDob" type="date"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400" />
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Ngày sinh</label>
+            <input id="editDob" type="date" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
           </div>
+          
           <div>
-            <label class="block text-xs font-medium text-slate-600 mb-1">Số điện thoại</label>
-            <input id="editPhone" type="text"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400" />
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Số điện thoại</label>
+            <input id="editPhone" type="text" placeholder="0901234567" class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
           </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-600 mb-1">Địa chỉ</label>
-            <input id="editAddress" type="text"
-              class="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400" />
+          
+          <div class="md:col-span-2">
+            <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2 ml-1">Địa chỉ thường trú</label>
+            <input id="editAddress" type="text" placeholder="Nhập địa chỉ của bạn..." class="w-full rounded-2xl border-2 border-slate-100 px-4 py-3 text-sm font-medium focus:border-primary-500 outline-none" />
           </div>
         </div>
-        <div class="flex gap-2 mt-5">
-          <button onclick="saveProfile()"
-            class="rounded-md bg-slate-800 text-white text-sm px-4 py-2 hover:bg-slate-700">Lưu</button>
-          <button onclick="cancelEdit()"
-            class="rounded-md border border-slate-300 text-slate-700 text-sm px-4 py-2 hover:bg-slate-50">Hủy</button>
+        
+        <div class="flex flex-col sm:flex-row gap-3 mt-10">
+          <button onclick="saveProfile()" class="rounded-2xl bg-primary-600 text-white text-sm font-black px-10 py-4 hover:bg-primary-700 shadow-xl shadow-primary-600/20 transition-all active:scale-95">Lưu thay đổi</button>
+          <button onclick="cancelEdit()" class="rounded-2xl border-2 border-slate-100 text-slate-600 text-sm font-bold px-10 py-4 hover:bg-slate-50 transition-all">Hủy bỏ</button>
         </div>
       </div>
     </main>
   </div>
+
   <script src="../js/data.js"></script>
   <script src="../js/shared.js"></script>
   <script src="../js/auth.js"></script>

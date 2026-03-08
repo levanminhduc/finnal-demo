@@ -3,9 +3,9 @@ renderHeader();
 renderEmployeeSidebar();
 
 function statusBadge(status) {
-  if (status === 'Approved') return '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">Approved</span>';
-  if (status === 'Rejected') return '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">Rejected</span>';
-  return '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-700">In Review</span>';
+  if (status === 'Approved') return '<span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Approved</span>';
+  if (status === 'Rejected') return '<span class="bg-rose-50 text-rose-700 border border-rose-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Rejected</span>';
+  return '<span class="bg-amber-50 text-amber-700 border border-amber-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">In Review</span>';
 }
 
 function renderPromotionTable() {
@@ -16,28 +16,35 @@ function renderPromotionTable() {
   const container = document.getElementById('promotionTable');
 
   if (promotions.length === 0) {
-    container.innerHTML = '<p class="text-sm text-slate-500 py-4">Chưa có đề xuất thăng tiến.</p>';
+    container.innerHTML = '<div class="text-center py-12 bg-white rounded-3xl border border-dashed border-slate-200"><p class="text-sm text-slate-400 font-medium">Chưa có đề xuất thăng tiến nào.</p></div>';
     return;
   }
 
   const rows = promotions.map(p => `
-    <tr class="hover:bg-slate-50">
-      <td class="px-4 py-3 text-sm">${p.currentPosition || '—'}</td>
-      <td class="px-4 py-3 text-sm">${p.nextPosition || p.proposedPosition || '—'}</td>
-      <td class="px-4 py-3 text-sm">${statusBadge(p.status)}</td>
+    <tr class="group hover:bg-slate-50/80 transition-colors">
+      <td class="px-6 py-4 text-sm font-bold text-slate-500">${p.currentPosition || '—'}</td>
+      <td class="px-6 py-4 text-sm font-black text-slate-900 tracking-tight">
+        <div class="flex items-center gap-2">
+          <span class="text-primary-600">${ICONS.promotions}</span>
+          ${p.nextPosition || p.proposedPosition || '—'}
+        </div>
+      </td>
+      <td class="px-6 py-4 text-sm">${statusBadge(p.status)}</td>
     </tr>`).join('');
 
   container.innerHTML = `
-    <div class="overflow-x-auto"><table class="w-full bg-white rounded-md shadow overflow-hidden">
-      <thead class="bg-slate-100">
-        <tr>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Vị trí hiện tại</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Vị trí đề xuất</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Trạng thái</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-100">${rows}</tbody>
-    </table></div>`;
+    <div class="overflow-x-auto rounded-3xl border border-slate-100 shadow-sm bg-white">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-slate-50/50 border-b border-slate-100">
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Vị trí hiện tại</th>
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Vị trí đề xuất</th>
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 renderPromotionTable();

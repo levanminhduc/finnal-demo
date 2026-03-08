@@ -10,50 +10,62 @@ function renderProfile() {
 
   if (!emp) {
     document.getElementById('profileCard').innerHTML =
-      '<p class="text-sm text-slate-400">Không tìm thấy thông tin nhân viên.</p>';
+      '<div class="text-center py-12"><p class="text-sm text-slate-400 font-medium">Không tìm thấy thông tin nhân viên.</p></div>';
     return;
   }
 
   document.getElementById('profileCard').innerHTML = `
-    <div class="grid grid-cols-2 gap-6">
-      <div class="space-y-3">
-        <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Họ tên</span>
-          <p class="text-sm font-medium text-slate-800 mt-0.5">${emp.name}</p>
+    <div class="card bg-white p-8 border-none shadow-soft-lg">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-2xl bg-primary-50 text-primary-600 flex items-center justify-center shadow-sm">
+          ${ICONS.profile}
         </div>
         <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Giới tính</span>
-          <p class="text-sm text-slate-700 mt-0.5">${emp.gender || '—'}</p>
-        </div>
-        <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Ngày sinh</span>
-          <p class="text-sm text-slate-700 mt-0.5">${formatDate(emp.dob)}</p>
-        </div>
-        <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Số điện thoại</span>
-          <p class="text-sm text-slate-700 mt-0.5">${emp.phone || '—'}</p>
-        </div>
-        <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Địa chỉ</span>
-          <p class="text-sm text-slate-700 mt-0.5">${emp.address || '—'}</p>
+          <h3 class="text-xl font-black text-slate-900 tracking-tight">Hồ sơ cá nhân</h3>
+          <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-0.5">Chi tiết thông tin nhân viên</p>
         </div>
       </div>
-      <div class="space-y-3">
-        <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Phòng ban</span>
-          <p class="text-sm text-slate-700 mt-0.5">${emp.department || '—'}</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-6 text-left">
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Họ tên</span>
+            <div class="p-4 rounded-2xl bg-slate-50/50 border border-slate-100 text-sm font-bold text-slate-700 group-hover:bg-white group-hover:shadow-sm transition-all">${emp.name}</div>
+          </div>
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Giới tính</span>
+            <div class="p-4 rounded-2xl bg-slate-50/50 border border-slate-100 text-sm font-bold text-slate-700 group-hover:bg-white group-hover:shadow-sm transition-all">${emp.gender || '—'}</div>
+          </div>
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Ngày sinh</span>
+            <div class="p-4 rounded-2xl bg-slate-50/50 border border-slate-100 text-sm font-bold text-slate-700 group-hover:bg-white group-hover:shadow-sm transition-all">${formatDate(emp.dob)}</div>
+          </div>
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Số điện thoại</span>
+            <div class="p-4 rounded-2xl bg-slate-50/50 border border-slate-100 text-sm font-bold text-slate-700 group-hover:bg-white group-hover:shadow-sm transition-all">${emp.phone || '—'}</div>
+          </div>
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Địa chỉ</span>
+            <div class="p-4 rounded-2xl bg-slate-50/50 border border-slate-100 text-sm font-bold text-slate-700 group-hover:bg-white group-hover:shadow-sm transition-all">${emp.address || '—'}</div>
+          </div>
         </div>
-        <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Chức vụ</span>
-          <p class="text-sm text-slate-700 mt-0.5">${emp.position || '—'}</p>
-        </div>
-        <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Ngày vào làm</span>
-          <p class="text-sm text-slate-700 mt-0.5">${formatDate(emp.joinDate)}</p>
-        </div>
-        <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase">Email</span>
-          <p class="text-sm text-slate-700 mt-0.5">${user ? user.email : '—'}</p>
+        <div class="space-y-6 text-left">
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Phòng ban</span>
+            <div class="p-4 rounded-2xl bg-primary-50/30 border border-primary-100 text-sm font-black text-primary-700 group-hover:bg-white group-hover:shadow-sm transition-all">${emp.department || '—'}</div>
+          </div>
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Chức vụ</span>
+            <div class="p-4 rounded-2xl bg-indigo-50/30 border border-indigo-100 text-sm font-black text-indigo-700 group-hover:bg-white group-hover:shadow-sm transition-all">${emp.position || '—'}</div>
+          </div>
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Ngày vào làm</span>
+            <div class="p-4 rounded-2xl bg-slate-50/50 border border-slate-100 text-sm font-bold text-slate-700 group-hover:bg-white group-hover:shadow-sm transition-all">${formatDate(emp.joinDate)}</div>
+          </div>
+          <div class="group">
+            <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest block mb-1.5 group-hover:text-primary-500 transition-colors">Email</span>
+            <div class="p-4 rounded-2xl bg-slate-50/50 border border-slate-100 text-sm font-bold text-slate-700 group-hover:bg-white group-hover:shadow-sm transition-all">${user ? user.email : '—'}</div>
+          </div>
         </div>
       </div>
     </div>`;

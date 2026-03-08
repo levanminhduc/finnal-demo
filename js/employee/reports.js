@@ -22,15 +22,22 @@ function renderStatCards() {
     : '—';
 
   const cards = [
-    { label: 'Tổng ngày công', value: workDays, color: 'text-blue-600' },
-    { label: 'Tổng đơn nghỉ', value: totalLeaves, color: 'text-yellow-600' },
-    { label: 'Điểm đánh giá trung bình', value: avgScore, color: 'text-green-600' }
+    { label: 'Tổng ngày công', value: workDays + ' ngày', icon: ICONS.attendance, color: 'text-blue-600', bg: 'bg-blue-50' },
+    { label: 'Tổng đơn nghỉ', value: totalLeaves + ' đơn', icon: ICONS.leaves, color: 'text-amber-600', bg: 'bg-amber-50' },
+    { label: 'Điểm đánh giá', value: avgScore + ' / 10', icon: ICONS.evaluations, color: 'text-emerald-600', bg: 'bg-emerald-50' }
   ];
 
   document.getElementById('statCards').innerHTML = cards.map(c => `
-    <div class="bg-white rounded-md shadow p-4">
-      <p class="text-xs text-slate-500 mb-1">${c.label}</p>
-      <p class="text-2xl font-bold ${c.color}">${c.value}</p>
+    <div class="card bg-white hover:scale-[1.02] transition-all duration-300">
+      <div class="flex items-start justify-between mb-4">
+        <div class="p-3 rounded-2xl ${c.bg} ${c.color} shadow-sm">
+          ${c.icon}
+        </div>
+      </div>
+      <div>
+        <p class="text-2xl font-black text-slate-900 tracking-tight">${c.value}</p>
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">${c.label}</p>
+      </div>
     </div>`).join('');
 }
 

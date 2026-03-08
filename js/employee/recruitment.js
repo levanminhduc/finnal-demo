@@ -3,9 +3,9 @@ renderHeader();
 renderEmployeeSidebar();
 
 function appStatusBadge(status) {
-  if (status === 'Accepted') return '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">Accepted</span>';
-  if (status === 'Rejected') return '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">Rejected</span>';
-  return '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-700">Pending</span>';
+  if (status === 'Accepted') return '<span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Accepted</span>';
+  if (status === 'Rejected') return '<span class="bg-rose-50 text-rose-700 border border-rose-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Rejected</span>';
+  return '<span class="bg-amber-50 text-amber-700 border border-amber-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Pending</span>';
 }
 
 function renderRecruitmentTable() {
@@ -17,38 +17,40 @@ function renderRecruitmentTable() {
   const container = document.getElementById('recruitmentTable');
 
   if (recruitments.length === 0) {
-    container.innerHTML = '<p class="text-sm text-slate-500 py-4">Hiện không có vị trí tuyển dụng nào đang mở.</p>';
+    container.innerHTML = '<div class="text-center py-12 bg-white rounded-3xl border border-dashed border-slate-200"><p class="text-sm text-slate-400 font-medium">Hiện không có vị trí tuyển dụng nào đang mở.</p></div>';
     return;
   }
 
   const rows = recruitments.map(r => {
     const myApp = applications.find(a => a.recruitmentId === r.id && a.employeeId === emp.id);
     const actionCell = myApp
-      ? `<span class="text-slate-500 text-sm">Đã ứng tuyển</span> ${appStatusBadge(myApp.status)}`
+      ? `<div class="flex items-center gap-2 font-bold text-slate-400 text-[10px] uppercase tracking-widest">Đã ứng tuyển ${appStatusBadge(myApp.status)}</div>`
       : `<button onclick="applyRecruitment(${r.id})"
-           class="rounded-md bg-slate-800 text-white text-sm px-3 py-1.5 hover:bg-slate-700">Ứng tuyển</button>`;
+           class="bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-xl hover:bg-primary-600 hover:shadow-lg hover:shadow-primary-600/20 transition-all duration-300">Ứng tuyển</button>`;
 
     return `
-      <tr class="hover:bg-slate-50">
-        <td class="px-4 py-3 text-sm font-medium text-slate-800">${r.title}</td>
-        <td class="px-4 py-3 text-sm">${r.department}</td>
-        <td class="px-4 py-3 text-sm text-slate-600">${r.description || r.requirements || '—'}</td>
-        <td class="px-4 py-3 text-sm">${actionCell}</td>
+      <tr class="group hover:bg-slate-50/80 transition-colors">
+        <td class="px-6 py-4 text-sm font-black text-slate-900 tracking-tight">${r.title}</td>
+        <td class="px-6 py-4 text-sm font-bold text-primary-600 uppercase tracking-tighter text-xs">${r.department}</td>
+        <td class="px-6 py-4 text-sm text-slate-600 font-medium leading-relaxed max-w-xs truncate">${r.description || r.requirements || '—'}</td>
+        <td class="px-6 py-4 text-sm">${actionCell}</td>
       </tr>`;
   }).join('');
 
   container.innerHTML = `
-    <div class="overflow-x-auto"><table class="w-full bg-white rounded-md shadow overflow-hidden">
-      <thead class="bg-slate-100">
-        <tr>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Tiêu đề</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Phòng ban</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Mô tả</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Thao tác</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-100">${rows}</tbody>
-    </table></div>`;
+    <div class="overflow-x-auto rounded-3xl border border-slate-100 shadow-sm bg-white">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-slate-50/50 border-b border-slate-100">
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Tiêu đề</th>
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Phòng ban</th>
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Mô tả</th>
+            <th class="px-6 py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">${rows}</tbody>
+      </table>
+    </div>`;
 }
 
 function applyRecruitment(recruitmentId) {

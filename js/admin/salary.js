@@ -10,7 +10,13 @@ function renderSalaryList() {
   const container = document.getElementById('salaryTable');
 
   if (salaries.length === 0) {
-    container.innerHTML = '<p class="text-sm text-slate-500 py-4">Chưa có phiếu lương nào.</p>';
+    container.innerHTML = `
+      <div class="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-100">
+        <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-300 mx-auto mb-4">
+          ${ICONS.salary}
+        </div>
+        <p class="text-slate-500 font-medium">Chưa có phiếu lương nào.</p>
+      </div>`;
     return;
   }
 
@@ -18,42 +24,50 @@ function renderSalaryList() {
     const emp = employees.find(e => e.id === s.employeeId);
     const empName = emp ? emp.name : '—';
     const statusBadge = s.status === 'Paid'
-      ? '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">Paid</span>'
-      : '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-700">Pending</span>';
+      ? '<span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Paid</span>'
+      : '<span class="bg-amber-50 text-amber-700 border border-amber-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Pending</span>';
+    
     return `
-      <tr class="hover:bg-slate-50">
-        <td class="px-4 py-3 text-sm">${empName}</td>
-        <td class="px-4 py-3 text-sm">${s.month || '—'}</td>
-        <td class="px-4 py-3 text-sm">${formatCurrency(s.base)}</td>
-        <td class="px-4 py-3 text-sm">${formatCurrency(s.bonus)}</td>
-        <td class="px-4 py-3 text-sm">${formatCurrency(s.deduction)}</td>
-        <td class="px-4 py-3 text-sm font-medium">${formatCurrency(s.total)}</td>
-        <td class="px-4 py-3 text-sm">${statusBadge}</td>
-        <td class="px-4 py-3 text-sm">
+      <tr class="group hover:bg-slate-50/80 transition-colors">
+        <td class="px-6 py-4 text-sm font-bold text-slate-800">${empName}</td>
+        <td class="px-6 py-4 text-sm text-slate-600 font-medium">${s.month || '—'}</td>
+        <td class="px-6 py-4 text-sm text-slate-600">${formatCurrency(s.base)}</td>
+        <td class="px-6 py-4 text-sm text-emerald-600 font-medium">+${formatCurrency(s.bonus)}</td>
+        <td class="px-6 py-4 text-sm text-rose-600 font-medium">-${formatCurrency(s.deduction)}</td>
+        <td class="px-6 py-4 text-sm font-black text-slate-900">${formatCurrency(s.total)}</td>
+        <td class="px-6 py-4 text-sm">${statusBadge}</td>
+        <td class="px-6 py-4 text-sm text-right">
           <button onclick="editSalary(${s.id})"
-            class="rounded-md bg-slate-800 text-white text-sm px-3 py-1.5 hover:bg-slate-700">
-            Sửa
+            class="p-2 text-slate-400 hover:text-primary-600 hover:bg-primary-50 rounded-xl transition-all duration-200"
+            title="Sửa">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
           </button>
         </td>
       </tr>`;
   }).join('');
 
   container.innerHTML = `
-    <div class="overflow-x-auto"><table class="w-full bg-white rounded-md shadow overflow-hidden">
-      <thead class="bg-slate-100">
-        <tr>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Nhân viên</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Tháng</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Lương cơ bản</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Thưởng</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Khấu trừ</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Tổng lương</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Trạng thái</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Thao tác</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-100">${rows}</tbody>
-    </table></div>`;
+    <div class="card overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-slate-50/50 border-b border-slate-100">
+            <tr>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Nhân viên</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Tháng</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Lương cơ bản</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Thưởng</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Khấu trừ</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Tổng lương</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Trạng thái</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4 text-right">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">${rows}</tbody>
+        </table>
+      </div>
+    </div>`;
 }
 
 function populateEmployeeSelect(selectedId) {

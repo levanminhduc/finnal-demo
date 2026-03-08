@@ -4,8 +4,8 @@ renderAdminSidebar();
 
 function statusBadge(status) {
   return status === 'active'
-    ? '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">active</span>'
-    : '<span class="inline-block px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">inactive</span>';
+    ? '<span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Active</span>'
+    : '<span class="bg-rose-50 text-rose-700 border border-rose-100 px-2.5 py-1 rounded-lg text-xs font-bold uppercase tracking-tighter">Inactive</span>';
 }
 
 function renderUserTable() {
@@ -15,34 +15,48 @@ function renderUserTable() {
   const rows = users.map(u => {
     const isSelf = currentUser && u.id === currentUser.id;
     const toggleBtn = isSelf
-      ? '<span class="text-xs text-slate-400">—</span>'
+      ? '<span class="text-xs font-bold text-slate-400 uppercase tracking-widest italic px-4">Đang dùng</span>'
       : u.status === 'active'
         ? `<button onclick="toggleUserStatus(${u.id})"
-             class="rounded-md bg-red-600 text-white text-sm px-3 py-1.5 hover:bg-red-700">Khóa</button>`
+             class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-100 transition-colors text-xs font-bold uppercase tracking-tighter">
+             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+             Khóa
+           </button>`
         : `<button onclick="toggleUserStatus(${u.id})"
-             class="rounded-md bg-green-600 text-white text-sm px-3 py-1.5 hover:bg-green-700">Mở khóa</button>`;
+             class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border border-emerald-100 transition-colors text-xs font-bold uppercase tracking-tighter">
+             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
+             Mở khóa
+           </button>`;
 
     return `
-      <tr class="hover:bg-slate-50">
-        <td class="px-4 py-3 text-sm">${u.email}</td>
-        <td class="px-4 py-3 text-sm">${u.role}</td>
-        <td class="px-4 py-3 text-sm">${statusBadge(u.status)}</td>
-        <td class="px-4 py-3 text-sm">${toggleBtn}</td>
+      <tr class="group hover:bg-slate-50/80 transition-colors">
+        <td class="px-6 py-4 text-sm font-bold text-slate-800">${u.email}</td>
+        <td class="px-6 py-4 text-sm font-medium">
+          <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 text-[10px] font-black uppercase tracking-widest">
+            ${u.role}
+          </span>
+        </td>
+        <td class="px-6 py-4 text-sm">${statusBadge(u.status)}</td>
+        <td class="px-6 py-4 text-sm">${toggleBtn}</td>
       </tr>`;
   }).join('');
 
   document.getElementById('userTable').innerHTML = `
-    <div class="overflow-x-auto"><table class="w-full bg-white rounded-md shadow overflow-hidden">
-      <thead class="bg-slate-100">
-        <tr>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Email</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Role</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Trạng thái</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600">Thao tác</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-100">${rows}</tbody>
-    </table></div>`;
+    <div class="card overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead class="bg-slate-50/50 border-b border-slate-100">
+            <tr>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Email</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Vai trò</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Trạng thái</th>
+              <th class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-6 py-4">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">${rows}</tbody>
+        </table>
+      </div>
+    </div>`;
 }
 
 function toggleUserStatus(id) {
